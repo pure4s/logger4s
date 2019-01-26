@@ -28,6 +28,7 @@ lazy val V = new {
   val macroParadiseVersion = "2.1.1"
   val kindProjectorVersion = "0.9.9"
   val loggingScalaVersion = "3.5.0"
+  val logbackClassicVersion = "1.2.3"
 }
 
 val noPublishSettings = Seq(
@@ -71,7 +72,6 @@ lazy val logger4s = project
   .dependsOn(coreJVM)
   .aggregate(coreJVM)
 
-val logbackClassicVersion = "1.2.3"
 lazy val core = crossProject(JVMPlatform)
   .crossType(CrossType.Full)
   .in(file("core"))
