@@ -6,7 +6,7 @@ inThisBuild(
   List(
     organization := "org.pure4s",
     sonatypeProfileName := "org.pure4s",
-    homepage := Some(url("https://github.com/pure4s/uuid4s")),
+    homepage := Some(url("https://github.com/pure4s/logger4s")),
     licenses := List(
       "Apache-2.0" -> url("https://opensource.org/licenses/MIT")),
     developers := List(
@@ -14,7 +14,7 @@ inThisBuild(
         "llfrometa89",
         "Liván Frómeta",
         "llfrometa@gmail.com",
-        url("http://pure4s.org/uuid4s/")
+        url("http://pure4s.org/logger4s/")
       )
     )
   ))
