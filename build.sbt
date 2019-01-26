@@ -6,6 +6,7 @@ inThisBuild(
   List(
     organization := "org.pure4s",
     sonatypeProfileName := "org.pure4s",
+    updateOptions := updateOptions.value.withGigahorse(false),
     homepage := Some(url("https://github.com/pure4s/logger4s")),
     licenses := List(
       "Apache-2.0" -> url("https://opensource.org/licenses/MIT")),
@@ -18,8 +19,6 @@ inThisBuild(
       )
     )
   ))
-
-updateOptions := updateOptions.value.withGigahorse(false)
 
 lazy val V = new {
   val catsVersion = "1.5.0"
@@ -82,7 +81,7 @@ lazy val core = crossProject(JVMPlatform)
   .jvmSettings(
     libraryDependencies ++= Seq(
       "com.typesafe.scala-logging" %% "scala-logging" % V.loggingScalaVersion,
-      "ch.qos.logback" % "logback-classic" % logbackClassicVersion
+      "ch.qos.logback" % "logback-classic" % V.logbackClassicVersion
     ))
 
 lazy val coreJVM = core.jvm
