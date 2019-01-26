@@ -19,6 +19,8 @@ inThisBuild(
     )
   ))
 
+updateOptions := updateOptions.value.withGigahorse(false)
+
 lazy val V = new {
   val catsVersion = "1.5.0"
   val catsEffectVersion = "1.1.0"
