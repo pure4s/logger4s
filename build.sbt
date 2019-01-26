@@ -69,6 +69,7 @@ lazy val logger4s = project
   .dependsOn(coreJVM)
   .aggregate(coreJVM)
 
+val logbackClassicVersion = "1.2.3"
 lazy val core = crossProject(JVMPlatform)
   .crossType(CrossType.Full)
   .in(file("core"))
@@ -76,11 +77,20 @@ lazy val core = crossProject(JVMPlatform)
   .settings(buildSettings)
   .settings(commonDependencies)
   .settings(compilerPlugins)
-  .jvmSettings(libraryDependencies ++= Seq(
-    "com.typesafe.scala-logging"  %% "scala-logging"  % V.loggingScalaVersion,
-  ))
+  .jvmSettings(
+    libraryDependencies ++= Seq(
+      "com.typesafe.scala-logging" %% "scala-logging" % V.loggingScalaVersion,
+      "ch.qos.logback" % "logback-classic" % logbackClassicVersion
+    ))
 
 lazy val coreJVM = core.jvm
+
+lazy val example = project
+  .in(file("example"))
+  .settings(buildSettings)
+  .settings(noPublishSettings)
+  .settings(compilerPlugins)
+  .dependsOn(coreJVM)
 
 addCommandAlias(
   "validateScalafmt",

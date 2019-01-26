@@ -12,8 +12,6 @@ trait Logger[F[_]] {
   def debug(message: String): F[Unit]
 }
 
-
-
 object Logger {
 
   def apply[F[_]](implicit F: Logger[F]): Logger[F] = F
