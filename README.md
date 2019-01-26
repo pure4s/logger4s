@@ -1,6 +1,6 @@
 # logger4s
 
-logger4s is functional Logger library for Scala.
+logger4s is purely functional Logger library for Scala. It's easy to use and does not force a specific target context. You can run your computations in any type `F[_]` that has an instance of cats-effect's `Sync[F]`.
 
 ## Installation
 
@@ -32,7 +32,6 @@ object BasicExampleMain extends App {
   val service = new UserService[IO]
   service.findByEmail("example@example.com").unsafeRunSync()
 }
-
 ```
 
 ## Code of conduct
