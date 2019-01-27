@@ -12,7 +12,7 @@ libraryDependencies += "org.pure4s" %% "logger4s" % "0.1.1"
 ```
 ## Usage
 
-Logger:
+Example 1:
 ```scala
 import cats.effect.{IO, Sync}
 import cats.implicits._
@@ -22,26 +22,27 @@ case class User(email: String)
 
 class UserService[F[_] : Sync : Logger] {
   def findByEmail(email: String): F[Option[User]] = {
-    Logger[F].info(s"Hello word functional logger ($email)") *> Option(User(email)).pure[F]
+    Logger[F].info(s"Hello word, functional logger ($email)") *> Option(User(email)).pure[F]
   }
 }
 
 object BasicExampleMain extends App {
-  implicit val sync: Logger[IO] = Logger.sync[IO](classOf[UserService[IO]])
+  implicit val instance: Logger[IO] = Logger.instance[IO](classOf[UserService[IO]])
 
   val service = new UserService[IO]
   service.findByEmail("example@example.com").unsafeRunSync()
+  //2019-01-27 21:40:40.557 [UserService][INFO ] Hello word, functional logger (example@example.com)
 }
 ```
 
-SLogger:
+Example 2:
 ```scala
 import cats.Show
 import cats.effect.{IO, Sync}
 import cats.implicits._
 import org.json4s.{Formats, NoTypeHints}
 import org.json4s.native.Serialization
-import org.pure4s.logger4s.SLogger
+import org.pure4s.logger4s.Logger
 import org.json4s.native.Serialization.write
 
 case class Client(email: String)
@@ -53,22 +54,22 @@ object Client {
   }
 }
 
-class ClientService[F[_] : Sync : SLogger] {
+class ClientService[F[_] : Sync : Logger] {
   import Client._
 
   def findByEmail(email: String): F[Option[Client]] = {
     val client = Client(email)
-    SLogger[F].info(client) *> Option(client).pure[F]
+    Logger[F].info(client) *> Option(client).pure[F]
   }
 }
 
-object BasicSLoggerExampleMain extends App {
-  implicit val instance: SLogger[IO] = SLogger.instance[IO](classOf[ClientService[IO]])
+object ComplexExampleMain extends App {
+  implicit val instance: Logger[IO] = Logger.instance[IO](classOf[ClientService[IO]])
 
   val service = new ClientService[IO]
   service.findByEmail("example@example.com").unsafeRunSync()
+  //2019-01-27 21:25:26.150 [ClientService][INFO ] {"email":"example@example.com"}
 }
-
 ```
 
 ## Code of conduct
