@@ -16,7 +16,7 @@ object Logger {
 
   def apply[F[_]](implicit F: Logger[F]): Logger[F] = F
 
-  def sync[F[_] : Sync](clazz: Class[_]): Logger[F] = new Logger[F] {
+  def instance[F[_] : Sync](clazz: Class[_]): Logger[F] = new Logger[F] {
     val log: slf4j.Logger = LoggerFactory.getLogger(clazz)
 
     def error(message: String): F[Unit]                   = Sync[F].delay(log.error(message))

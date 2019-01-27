@@ -11,7 +11,7 @@ class UserService[F[_] : Sync : Logger] {
 }
 
 object BasicExampleMain extends App {
-  implicit val sync: Logger[IO] = Logger.sync[IO](classOf[UserService[IO]])
+  implicit val instance: Logger[IO] = Logger.instance[IO](classOf[UserService[IO]])
 
   val service = new UserService[IO]
   service.findByEmail("example@example.com").unsafeRunSync()
