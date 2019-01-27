@@ -6,7 +6,6 @@ inThisBuild(
   List(
     organization := "org.pure4s",
     sonatypeProfileName := "org.pure4s",
-    updateOptions := updateOptions.value.withGigahorse(false),
     homepage := Some(url("https://github.com/pure4s/logger4s")),
     licenses := List(
       "Apache-2.0" -> url("https://opensource.org/licenses/MIT")),
@@ -19,7 +18,6 @@ inThisBuild(
       )
     )
   ))
-
 
 lazy val V = new {
   val catsVersion = "1.5.0"
