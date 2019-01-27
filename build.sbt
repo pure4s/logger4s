@@ -27,6 +27,7 @@ lazy val V = new {
   val kindProjectorVersion = "0.9.9"
   val loggingScalaVersion = "3.5.0"
   val logbackClassicVersion = "1.2.3"
+  val json4sVersion = "3.6.4"
 }
 
 val noPublishSettings = Seq(
@@ -91,6 +92,9 @@ lazy val example = project
   .settings(noPublishSettings)
   .settings(compilerPlugins)
   .dependsOn(coreJVM)
+  .settings(libraryDependencies ++= Seq(
+    "org.json4s" %% "json4s-native" % V.json4sVersion
+  ))
 
 addCommandAlias(
   "validateScalafmt",
