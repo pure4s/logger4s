@@ -3,7 +3,7 @@ import cats.effect.{IO, Sync}
 import cats.implicits._
 import org.json4s.{Formats, NoTypeHints}
 import org.json4s.native.Serialization
-import org.pure4s.logger4s.SLogger
+import org.pure4s.logger4s.Logger
 import org.json4s.native.Serialization.write
 
 case class Client(email: String)
@@ -15,17 +15,17 @@ object Client {
   }
 }
 
-class ClientService[F[_] : Sync : SLogger] {
+class ClientService[F[_] : Sync : Logger] {
   import Client._
 
   def findByEmail(email: String): F[Option[Client]] = {
     val client = Client(email)
-    SLogger[F].info(client) *> Option(client).pure[F]
+    Logger[F].info(client) *> Option(client).pure[F]
   }
 }
 
-object BasicSLoggerExampleMain extends App {
-  implicit val instance: SLogger[IO] = SLogger.instance[IO](classOf[ClientService[IO]])
+object ComplexExampleMain extends App {
+  implicit val instance: Logger[IO] = Logger.instance[IO](classOf[ClientService[IO]])
 
   val service = new ClientService[IO]
   service.findByEmail("example@example.com").unsafeRunSync()

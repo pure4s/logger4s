@@ -1,5 +1,5 @@
 package org.pure4s.logger4s
-
+import org.pure4s.logger4s.Logger.showString
 import cats.effect.IO
 import org.scalatest._
 
