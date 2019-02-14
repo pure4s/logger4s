@@ -1,5 +1,3 @@
-import microsites._
-import ReleaseTransformations._
 import sbtcrossproject.{crossProject, CrossType}
 
 inThisBuild(
@@ -28,6 +26,7 @@ lazy val V = new {
   val loggingScalaVersion = "3.5.0"
   val logbackClassicVersion = "1.2.3"
   val json4sVersion = "3.6.4"
+  val mockitoVersion = "1.10.19"
 }
 
 val noPublishSettings = Seq(
@@ -51,16 +50,8 @@ val commonDependencies = Seq(
   libraryDependencies ++= Seq(
     "org.typelevel" %% "cats-core" % V.catsVersion,
     "org.typelevel" %% "cats-effect" % V.catsEffectVersion,
-    "org.scalatest" %% "scalatest" % V.scalaTestVersion % Test
-  )
-)
-
-val compilerPlugins = Seq(
-  libraryDependencies ++= Seq(
-    compilerPlugin(
-      "org.scalamacros" %% "paradise" % V.macroParadiseVersion cross CrossVersion.full),
-    compilerPlugin(
-      "org.spire-math" %% "kind-projector" % V.kindProjectorVersion)
+    "org.scalatest" %% "scalatest" % V.scalaTestVersion % Test,
+    "org.mockito" % "mockito-all" % V.mockitoVersion % Test
   )
 )
 
@@ -77,12 +68,9 @@ lazy val core = crossProject(JVMPlatform)
   .settings(moduleName := "logger4s")
   .settings(buildSettings)
   .settings(commonDependencies)
-  .settings(compilerPlugins)
-  .jvmSettings(
-    libraryDependencies ++= Seq(
-      "com.typesafe.scala-logging" %% "scala-logging" % V.loggingScalaVersion,
-      "ch.qos.logback" % "logback-classic" % V.logbackClassicVersion
-    ))
+  .jvmSettings(libraryDependencies ++= Seq(
+    "ch.qos.logback" % "logback-classic" % V.logbackClassicVersion
+  ))
 
 lazy val coreJVM = core.jvm
 
@@ -90,11 +78,11 @@ lazy val example = project
   .in(file("example"))
   .settings(buildSettings)
   .settings(noPublishSettings)
-  .settings(compilerPlugins)
   .dependsOn(coreJVM)
-  .settings(libraryDependencies ++= Seq(
-    "org.json4s" %% "json4s-native" % V.json4sVersion
-  ))
+  .settings(
+    libraryDependencies ++= Seq(
+      "org.json4s" %% "json4s-native" % V.json4sVersion
+    ))
 
 addCommandAlias(
   "validateScalafmt",
