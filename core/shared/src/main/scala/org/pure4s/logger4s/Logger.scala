@@ -29,7 +29,7 @@ object Logger {
 
   }
 
-  implicit def syncInstance[F[_] : Sync](implicit logger: slf4j.Logger): Logger[F] = new Logger[F] {
+  implicit def instance[F[_] : Sync](implicit logger: slf4j.Logger): Logger[F] = new Logger[F] {
 
     def error(msg: String): F[Unit]                     = Sync[F].delay(logger.error(msg))
     def error(msg: String, err: Throwable): F[Unit]     = Sync[F].delay(logger.error(msg, err))
