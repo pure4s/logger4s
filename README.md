@@ -87,6 +87,8 @@ class AuthService[F[_] : Sync] extends LazyLogging {
 object BasicLazyLoggingExampleMain extends App {
   val service = new AuthService[IO]
   service.login("example@example.com","123").unsafeRunSync()
+  //2019-01-27 21:40:40.557 [AuthService][INFO] - Login with email = example@example.com and password = 123
+  //2019-01-27 21:40:40.557 [AuthService][INFO] - Success login with session = Session(example@example.com,token)
 }
 ```
 
