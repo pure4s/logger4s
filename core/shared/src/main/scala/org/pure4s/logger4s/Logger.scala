@@ -14,7 +14,7 @@ object Logger {
 
   def instance[F[_] : Sync](clazz: Class[_])
     (implicit logger: slf4j.Logger = LoggerFactory.getLogger(clazz)): Logger[F] = new Logger[F] {
-println(s"----> $logger")
+
     def error(msg: String): F[Unit]                     = Sync[F].delay(logger.error(msg))
     def error(msg: String, err: Throwable): F[Unit]     = Sync[F].delay(logger.error(msg, err))
     def warn(msg: String): F[Unit]                      = Sync[F].delay(logger.warn(msg))
