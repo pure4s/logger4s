@@ -1,6 +1,6 @@
 # Logger4s
 
-Logger4s is a wrapping [SLF4J](https://www.slf4j.org/) library purely functional  for Scala. 
+Logger4s is a wrapping [SLF4J](https://www.slf4j.org/) library purely functional for Scala. 
 It's easy to use and does not force a specific target context. 
 You can run your computations in any type `F[_]` that has an instance of cats-effect's `Sync[F]`.
 
@@ -52,7 +52,7 @@ object BasicExampleMain extends App {
 
   val service = new UserService[IO]
   service.findByEmail("example@example.com").unsafeRunSync()
-  //2019-01-27 21:40:40.557 [UserService][INFO ] Hello word, functional logger (example@example.com)
+  //2019-01-27 21:40:40.557 [UserService][INFO] - Hello word, functional logger (example@example.com)
 }
 ```
 
@@ -66,11 +66,22 @@ import org.pure4s.logger4s.Logger._
 case class Session(email: String, token: String)
 
 class AuthService[F[_] : Sync] extends LazyLogging {
-  def login(email: String, password: String): F[Session] = for {
-    _       <- Logger[F].info(s"Login with email = $email and password = $password")
-    session <- Session(email, "token").pure[F]
-    _       <- Logger[F].info(s"Success login with session = $session")
-  } yield session
+
+  def login(email: String, password: String): F[Session] = {
+
+    def recoveryStrategy: PartialFunction[Throwable, F[Session]] = {
+      case error =>
+        Logger[F].error(s"Error creating session", error) *> Sync[F].raiseError(error)
+    }
+
+    val computation = for {
+      _       <- Logger[F].info(s"Login with email = $email and password = $password")
+      session <- Session(email, "token").pure[F]
+      _       <- Logger[F].info(s"Success login with session = $session")
+    } yield session
+
+    computation recoverWith recoveryStrategy
+  }
 }
 
 object BasicLazyLoggingExampleMain extends App {
@@ -112,7 +123,7 @@ object ComplexExampleMain extends App {
 
   val service = new ClientService[IO]
   service.findByEmail("example@example.com").unsafeRunSync()
-  //2019-01-27 21:25:26.150 [ClientService][INFO] {"email":"example@example.com"}
+  //2019-01-27 21:25:26.150 [ClientService][INFO] - {"email":"example@example.com"}
 }
 ```
 
