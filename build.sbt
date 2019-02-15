@@ -48,10 +48,10 @@ val buildSettings = Seq(
 
 val commonDependencies = Seq(
   libraryDependencies ++= Seq(
-    "org.typelevel" %% "cats-core" % V.catsVersion,
+    "org.typelevel" %% "cats-core"   % V.catsVersion,
     "org.typelevel" %% "cats-effect" % V.catsEffectVersion,
-    "org.scalatest" %% "scalatest" % V.scalaTestVersion % Test,
-    "org.mockito" % "mockito-all" % V.mockitoVersion % Test
+    "org.scalatest" %% "scalatest"   % V.scalaTestVersion  % Test,
+    "org.mockito"   % "mockito-all"  % V.mockitoVersion    % Test
   )
 )
 
