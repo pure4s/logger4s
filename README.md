@@ -8,7 +8,7 @@ You can run your computations in any type `F[_]` that has an instance of cats-ef
 
 * Java 6 or higher
 * Scala 2.11 or 2.12
-* Logging backend compatible with [SLF4J](https://www.slf4j.org/)
+* [Logback](http://logback.qos.ch) backend compatible with [SLF4J](https://www.slf4j.org/)
 
 ## Getting Logger4s ##
 
