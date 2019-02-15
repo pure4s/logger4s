@@ -1,6 +1,6 @@
 # Logger4s
 
-Logger4s is a wrapping [SLF4J](https://www.slf4j.org/) library purely functional for Scala. 
+Logger4s is a wrapping [SLF4J](https://www.slf4j.org/) purely functional library for Scala. 
 It's easy to use and does not force a specific target context. 
 You can run your computations in any type `F[_]` that has an instance of cats-effect's `Sync[F]`.
 
@@ -9,12 +9,6 @@ You can run your computations in any type `F[_]` that has an instance of cats-ef
 * Java 6 or higher
 * Scala 2.11 or 2.12
 * Logging backend compatible with [SLF4J](https://www.slf4j.org/)
-
-A compatible logging backend is [Logback](http://logback.qos.ch), add it to your sbt build definition:
-
-```scala
-libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"
-```
 
 ## Getting Logger4s ##
 
