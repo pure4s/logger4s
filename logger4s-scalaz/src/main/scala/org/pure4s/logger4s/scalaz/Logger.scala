@@ -19,4 +19,12 @@ object Logger {
     override def info(msg: String): IO[Nothing, Unit]                   = IO.sync(logger.info(msg))
     override def debug(msg: String): IO[Nothing, Unit]                  = IO.sync(logger.debug(msg))
   }
+
+  implicit def instance(implicit logger: slf4j.Logger) = new Logger[IO[Nothing, ?]] {
+    override def error(msg: String): IO[Nothing, Unit]                  = IO.sync(logger.error(msg))
+    override def error(msg: String, err: Throwable): IO[Nothing, Unit]  = IO.sync(logger.error(msg, err))
+    override def warn(msg: String): IO[Nothing, Unit]                   = IO.sync(logger.warn(msg))
+    override def info(msg: String): IO[Nothing, Unit]                   = IO.sync(logger.info(msg))
+    override def debug(msg: String): IO[Nothing, Unit]                  = IO.sync(logger.debug(msg))
+  }
 }
