@@ -113,7 +113,7 @@ lazy val scalaz = crossProject(JVMPlatform)
 
 lazy val scalazJVM = scalaz.jvm
 
-lazy val example = project
+lazy val exampleCats = project
   .in(file("example-cats"))
   .settings(buildSettings)
   .settings(noPublishSettings)

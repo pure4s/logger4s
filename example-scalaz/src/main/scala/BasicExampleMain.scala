@@ -1,17 +1,8 @@
-import org.pure4s.logger4s.scalaz.Logger
+import org.pure4s.logger4s.LazyLogging
 import scalaz.zio.{IO, RTS}
+import org.pure4s.logger4s.scalaz.Logger
 
-case class User(email: String)
+object BasicExampleMain extends App with RTS with LazyLogging {
 
-class UserService[F[_]: Logger] {
-  def findByEmail(email: String): F[Unit] = {
-    Logger[F].info(s"Hello word, functional logger ($email)")
-  }
-}
-
-object BasicExampleMain extends App with RTS {
-  implicit val instance = Logger.instance(classOf[UserService[IO[Nothing, ?]]])
-
-  val service = new UserService[IO[Nothing, ?]]
-  unsafeRun(service.findByEmail("example@example.com"))
+  unsafeRun(Logger[IO[Nothing, ?]].info(s"Hello word, purely functional logger"))
 }
