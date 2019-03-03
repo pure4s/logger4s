@@ -17,7 +17,7 @@ object Client {
   }
 }
 
-class ClientService[F[_] : Sync] extends LazyLogging{
+class ClientService[F[_]: Sync] extends LazyLogging {
   import Client._
 
   def findByEmail(email: String): F[Option[Client]] = {

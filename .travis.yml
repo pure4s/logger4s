@@ -29,9 +29,9 @@ jobs:
       script: sbt scalafmt::test
     - stage: test
       script:
-        - sbt ++$TRAVIS_SCALA_VERSION clean coverage coreJVM/test scalazJVM/test coverageReport
+        - sbt ++$TRAVIS_SCALA_VERSION clean coverage coreJVM/test catsJVM/test scalazJVM/test coverageReport
         - sbt validateScalafmt
-        - sbt example/compile
+        - sbt exampleCats/compile exampleScalaz/compile
     - stage: release
       script: sbt ci-release
 

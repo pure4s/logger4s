@@ -4,10 +4,9 @@ import org.pure4s.logger4s.cats.Logger
 
 case class User(email: String)
 
-class UserService[F[_] : Sync : Logger] {
-  def findByEmail(email: String): F[Option[User]] = {
+class UserService[F[_]: Sync: Logger] {
+  def findByEmail(email: String): F[Option[User]] =
     Logger[F].info(s"User email is $email") *> Option(User(email)).pure[F]
-  }
 }
 
 object OtherBasicExampleMain extends App {

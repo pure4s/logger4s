@@ -6,7 +6,7 @@ import org.pure4s.logger4s.cats.Logger._
 
 case class Session(email: String, token: String)
 
-class AuthService[F[_] : Sync] extends LazyLogging {
+class AuthService[F[_]: Sync] extends LazyLogging {
 
   def login(email: String, password: String): F[Session] = {
 
@@ -28,5 +28,5 @@ class AuthService[F[_] : Sync] extends LazyLogging {
 
 object BasicLazyLoggingExampleMain extends App {
   val service = new AuthService[IO]
-  service.login("example@example.com","123").unsafeRunSync()
+  service.login("example@example.com", "123").unsafeRunSync()
 }
