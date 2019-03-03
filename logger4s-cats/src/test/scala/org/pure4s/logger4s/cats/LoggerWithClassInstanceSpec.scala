@@ -1,4 +1,4 @@
-package org.pure4s.logger4s
+package org.pure4s.logger4s.cats
 
 import cats.Show
 import cats.implicits._
@@ -8,7 +8,7 @@ import org.scalatest.{Matchers, _}
 import org.scalatest.mockito.MockitoSugar
 import org.slf4j.{Logger => Underlying}
 
-class LoggerSpec extends FunSpec with Matchers with MockitoSugar {
+class LoggerWithClassInstanceSpec extends FunSpec with Matchers with MockitoSugar {
 
   describe("Logger[F[_]].info") {
     val f = fixture(_.isInfoEnabled, isEnabled = true)
@@ -80,7 +80,7 @@ class LoggerSpec extends FunSpec with Matchers with MockitoSugar {
       val msgObj = Msg(msg)
 
       implicit val underlying: Underlying = mock[org.slf4j.Logger]
-      implicit val logger: Logger[IO] = Logger.instance[IO](classOf[LoggerSpec])
+      implicit val logger: Logger[IO] = Logger.instance[IO](classOf[LoggerWithClassInstanceSpec])
 
       when(p(underlying)).thenReturn(isEnabled)
     }

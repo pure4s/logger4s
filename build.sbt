@@ -27,6 +27,8 @@ lazy val V = new {
   val logbackClassicVersion = "1.2.3"
   val json4sVersion = "3.6.4"
   val mockitoVersion = "1.10.19"
+  val scalazZIOVersion = "0.6.3"
+  val scalazCoreVersion = "7.2.27"
 }
 
 val noPublishSettings = Seq(
@@ -48,10 +50,17 @@ val buildSettings = Seq(
 
 val commonDependencies = Seq(
   libraryDependencies ++= Seq(
-    "org.typelevel" %% "cats-core"   % V.catsVersion,
-    "org.typelevel" %% "cats-effect" % V.catsEffectVersion,
-    "org.scalatest" %% "scalatest"   % V.scalaTestVersion  % Test,
-    "org.mockito"   % "mockito-all"  % V.mockitoVersion    % Test
+    "org.scalatest" %% "scalatest" % V.scalaTestVersion % Test,
+    "org.mockito" % "mockito-all" % V.mockitoVersion % Test
+  )
+)
+
+val compilerPlugins = Seq(
+  libraryDependencies ++= Seq(
+    compilerPlugin(
+      "org.scalamacros" %% "paradise" % V.macroParadiseVersion cross CrossVersion.full),
+    compilerPlugin(
+      "org.spire-math" %% "kind-projector" % V.kindProjectorVersion)
   )
 )
 
@@ -65,7 +74,7 @@ lazy val logger4s = project
 lazy val core = crossProject(JVMPlatform)
   .crossType(CrossType.Full)
   .in(file("core"))
-  .settings(moduleName := "logger4s")
+  .settings(moduleName := "logger4s-core")
   .settings(buildSettings)
   .settings(commonDependencies)
   .jvmSettings(libraryDependencies ++= Seq(
@@ -74,15 +83,55 @@ lazy val core = crossProject(JVMPlatform)
 
 lazy val coreJVM = core.jvm
 
-lazy val example = project
-  .in(file("example"))
+lazy val cats = crossProject(JVMPlatform)
+  .crossType(CrossType.Pure)
+  .in(file("logger4s-cats"))
+  .settings(moduleName := "logger4s-cats")
+  .settings(buildSettings)
+  .settings(commonDependencies)
+  .settings(compilerPlugins)
+  .settings(libraryDependencies ++= Seq(
+      "org.typelevel" %% "cats-core" % V.catsVersion,
+      "org.typelevel" %% "cats-effect" % V.catsEffectVersion,
+  ))
+  .dependsOn(core)
+
+lazy val catsJVM = cats.jvm
+
+lazy val scalaz = crossProject(JVMPlatform)
+  .crossType(CrossType.Pure)
+  .in(file("logger4s-scalaz"))
+  .settings(moduleName := "logger4s-scalaz")
+  .settings(buildSettings)
+  .settings(commonDependencies)
+  .settings(compilerPlugins)
+  .settings(libraryDependencies ++= Seq(
+    "org.scalaz" %% "scalaz-core" % V.scalazCoreVersion,
+    "org.scalaz" %% "scalaz-zio" % V.scalazZIOVersion
+  ))
+  .dependsOn(core)
+
+lazy val scalazJVM = scalaz.jvm
+
+lazy val exampleCats = project
+  .in(file("example-cats"))
   .settings(buildSettings)
   .settings(noPublishSettings)
-  .dependsOn(coreJVM)
+  .dependsOn(coreJVM, catsJVM)
   .settings(
     libraryDependencies ++= Seq(
       "org.json4s" %% "json4s-native" % V.json4sVersion
     ))
+
+lazy val exampleScalaz = project
+  .in(file("example-scalaz"))
+  .settings(buildSettings)
+  .settings(noPublishSettings)
+  .settings(compilerPlugins)
+  .dependsOn(coreJVM, scalazJVM)
+  .settings(libraryDependencies ++= Seq(
+    "org.json4s" %% "json4s-native" % V.json4sVersion
+  ))
 
 addCommandAlias(
   "validateScalafmt",

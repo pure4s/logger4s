@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="33 seconds">
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern> %d{yyyy-MM-dd HH:mm:ss.SSS} [%logger{36}][%-5level] %msg %n
+            </Pattern>
+        </encoder>
+    </appender>
+    <logger name="org.codingpedia" additivity="false">
+        <appender-ref ref="consoleAppender" />
+    </logger>
+    <root level="INFO">
+        <appender-ref ref="consoleAppender" />
+    </root>
+</configuration>
