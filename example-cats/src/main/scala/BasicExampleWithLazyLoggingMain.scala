@@ -1,7 +1,8 @@
 import cats.effect.{IO, Sync}
 import cats.implicits._
-import org.pure4s.logger4s.{LazyLogging, Logger}
-import org.pure4s.logger4s.Logger._
+import org.pure4s.logger4s.LazyLogging
+import org.pure4s.logger4s.cats.Logger
+import org.pure4s.logger4s.cats.Logger._
 
 case class Session(email: String, token: String)
 

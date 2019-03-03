@@ -1,25 +1,27 @@
-package org.pure4s.logger4s
+package org.pure4s.logger4s.cats
 
 import cats.Show
 import cats.implicits._
 import cats.effect.IO
 import org.mockito.Mockito._
-import org.scalatest.{Matchers, _}
 import org.scalatest.mockito.MockitoSugar
+import org.scalatest.{Matchers, _}
 import org.slf4j.{Logger => Underlying}
+import Logger._
+import org.pure4s.logger4s.LazyLogging
 
-class LoggerSpec extends FunSpec with Matchers with MockitoSugar {
+class LoggerWithLazyInstanceSpec extends FunSpec with Matchers with MockitoSugar with FakeLazyLogging {
 
   describe("Logger[F[_]].info") {
     val f = fixture(_.isInfoEnabled, isEnabled = true)
     import f._
     it(s"Success expected info message") {
       Logger[IO].info(msg).unsafeRunSync()
-      verify(underlying).info(msg)
+      verify(logger).info(msg)
     }
     it(s"Success expected info generic message") {
       Logger[IO].info(msgObj).unsafeRunSync()
-      verify(underlying).info(msgObj.show)
+      verify(logger).info(msgObj.show)
     }
   }
 
@@ -28,11 +30,11 @@ class LoggerSpec extends FunSpec with Matchers with MockitoSugar {
     import f._
     it(s"Success expected warn message") {
       Logger[IO].warn(msg).unsafeRunSync()
-      verify(underlying).warn(msg)
+      verify(logger).warn(msg)
     }
     it(s"Success expected warn generic message") {
       Logger[IO].warn(msgObj).unsafeRunSync()
-      verify(underlying).warn(msgObj.show)
+      verify(logger).warn(msgObj.show)
     }
   }
 
@@ -41,11 +43,11 @@ class LoggerSpec extends FunSpec with Matchers with MockitoSugar {
     import f._
     it(s"Success expected debug message") {
       Logger[IO].debug(msg).unsafeRunSync()
-      verify(underlying).debug(msg)
+      verify(logger).debug(msg)
     }
     it(s"Success expected debug generic message") {
       Logger[IO].debug(msgObj).unsafeRunSync()
-      verify(underlying).debug(msgObj.show)
+      verify(logger).debug(msgObj.show)
     }
   }
 
@@ -55,33 +57,35 @@ class LoggerSpec extends FunSpec with Matchers with MockitoSugar {
     lazy val exception = new Exception
     it(s"Success expected error message") {
       Logger[IO].error(msg).unsafeRunSync()
-      verify(underlying).error(msg)
+      verify(logger).error(msg)
     }
     it(s"Success expected error message with Throwable") {
       Logger[IO].error(msg, exception).unsafeRunSync()
-      verify(underlying).error(msg, exception)
+      verify(logger).error(msg, exception)
     }
     it(s"Success expected error generic message") {
       Logger[IO].error(msgObj).unsafeRunSync()
-      verify(underlying).error(msgObj.show)
+      verify(logger).error(msgObj.show)
     }
     it(s"Success expected error generic message with Throwable") {
       Logger[IO].error(msgObj, exception).unsafeRunSync()
-      verify(underlying).error(msgObj.show, exception)
+      verify(logger).error(msgObj.show, exception)
     }
   }
 
   def fixture(p: Underlying => Boolean, isEnabled: Boolean) =
     new {
-
       val msg = "msg"
       case class Msg(value: String)
-      implicit val showMsg = new Show[Msg] { def show(t: Msg): String = t.toString }
+      implicit lazy val showMsg = new Show[Msg] { def show(t: Msg): String = t.toString }
       val msgObj = Msg(msg)
 
-      implicit val underlying: Underlying = mock[org.slf4j.Logger]
-      implicit val logger: Logger[IO] = Logger.instance[IO](classOf[LoggerSpec])
-
-      when(p(underlying)).thenReturn(isEnabled)
+      when(p(logger)).thenReturn(isEnabled)
     }
 }
+
+trait FakeLazyLogging extends LazyLogging with MockitoSugar {
+  override implicit lazy val logger: Underlying = mock[org.slf4j.Logger]
+}
+
+

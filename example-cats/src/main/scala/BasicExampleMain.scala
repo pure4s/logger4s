@@ -1,6 +1,6 @@
 import cats.effect.{IO, Sync}
 import cats.implicits._
-import org.pure4s.logger4s.Logger
+import org.pure4s.logger4s.cats.Logger
 
 case class User(email: String)
 

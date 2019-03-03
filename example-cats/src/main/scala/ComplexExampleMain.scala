@@ -1,11 +1,12 @@
 import cats.Show
 import cats.effect.{IO, Sync}
 import cats.implicits._
-import org.json4s.{Formats, NoTypeHints}
 import org.json4s.native.Serialization
-import org.pure4s.logger4s.{LazyLogging, Logger}
-import org.pure4s.logger4s.Logger._
 import org.json4s.native.Serialization.write
+import org.json4s.{Formats, NoTypeHints}
+import org.pure4s.logger4s.LazyLogging
+import org.pure4s.logger4s.cats.Logger
+import org.pure4s.logger4s.cats.Logger._
 
 case class Client(email: String)
 
