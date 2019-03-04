@@ -1,3 +1,13 @@
+[comment]: # (Start Badges)
+
+[![Build Status](https://travis-ci.org/pure4s/logger4s.svg?branch=master)](https://travis-ci.org/pure4s/logger4s)
+[![Maven Central](https://img.shields.io/badge/maven%20central-0.3.0-green.svg)](https://oss.sonatype.org/#nexus-search;gav~org.pure4s~logger4s-core*)
+[![GitHub Issues](https://img.shields.io/github/issues/pure4s/logger4s.svg)](https://github.com/pure4s/logger4s/issues)
+[![GitHub PR](https://img.shields.io/github/issues-pr/pure4s/logger4s.svg)](https://github.com/pure4s/logger4s/pulls)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+[comment]: # (End Badges)
+
 # Logger4s
 
 Logger4s is a wrapping [SLF4J](https://www.slf4j.org/) purely functional library for Scala. 
@@ -38,7 +48,7 @@ import org.pure4s.logger4s.cats.Logger._
 
 object Main extends App with LazyLogging {
   Logger[IO].info(s"Hello word, functional logger").unsafeRunSync()
-  //2019-03-03 21:34:04.880 [BasicExampleMain$][INFO ] Hello word, purely functional logger
+  //2019-03-03 21:34:04.880 [Main$][INFO ] Hello word, purely functional logger
 }
 ```
 
@@ -146,7 +156,7 @@ import org.pure4s.logger4s.scalaz.Logger
 object Main extends App with RTS with LazyLogging {
 
   unsafeRun(Logger[IO[Nothing, ?]].info(s"Hello word, purely functional logger"))
-  //2019-03-03 21:49:59.905 [BasicExampleMain$][INFO ] Hello word, purely functional logger
+  //2019-03-03 21:49:59.905 [Main$][INFO ] Hello word, purely functional logger
 }
 ```
 
