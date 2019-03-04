@@ -29,14 +29,20 @@ Logger4s is published to Sonatype OSS and Maven Central:
 - Artifact id / name: *logger4s*
 - Latest version is 0.3.0
 
-Usage with SBT, adding a dependency to the latest version of Logger4s to your `build.sbt`:
+Usage with SBT, adding a dependency to the latest version of Logger4s to your `build.sbt` e.g:
 
 ```scala
 // For Scala 2.11, or 2.12
-libraryDependencies += "org.pure4s" %% "logger4s-core"   % "0.3.0"  // Only if you want to support any backend
 libraryDependencies += "org.pure4s" %% "logger4s-cats"   % "0.3.0"  // Cats ecosystem (cats-effect)
-libraryDependencies += "org.pure4s" %% "logger4s-scalaz" % "0.3.0"  // Scalaz ecosystem (scalaz-zio)
 ```
+
+## Modules
+
+| Module name          | Description                                                  | Version |
+| -------------------- | ------------------------------------------------------------ | ------- |
+| `logger4s-core`      | Algebras. Only if you want to support any backend            | `0.3.0` |
+| `logger4s-cats`      | Cats ecosystem (cats-effect)                                 | `0.3.0` |
+| `logger4s-scalaz`    | Scalaz ecosystem (scalaz-zio)                                | `0.3.0` |
 
 ## Using Logger4s ##
 
