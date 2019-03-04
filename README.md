@@ -1,3 +1,6 @@
+
+# Logger4s
+
 [comment]: # (Start Badges)
 
 [![Build Status](https://travis-ci.org/pure4s/logger4s.svg?branch=master)](https://travis-ci.org/pure4s/logger4s)
@@ -7,8 +10,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 [comment]: # (End Badges)
-
-# Logger4s
 
 Logger4s is a wrapping [SLF4J](https://www.slf4j.org/) purely functional library for Scala. 
 It's easy to use and does not force a specific target context. 
