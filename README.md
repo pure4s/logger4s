@@ -4,7 +4,7 @@
 [comment]: # (Start Badges)
 
 [![Build Status](https://travis-ci.org/pure4s/logger4s.svg?branch=master)](https://travis-ci.org/pure4s/logger4s)
-[![Maven Central](https://img.shields.io/badge/maven%20central-0.3.0-green.svg)](https://oss.sonatype.org/#nexus-search;gav~org.pure4s~logger4s-core*)
+[![Maven Central](https://img.shields.io/badge/maven%20central-0.3.1-green.svg)](https://oss.sonatype.org/#nexus-search;gav~org.pure4s~logger4s-core*)
 [![GitHub Issues](https://img.shields.io/github/issues/pure4s/logger4s.svg)](https://github.com/pure4s/logger4s/issues)
 [![GitHub PR](https://img.shields.io/github/issues-pr/pure4s/logger4s.svg)](https://github.com/pure4s/logger4s/pulls)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -27,22 +27,22 @@ Logger4s is published to Sonatype OSS and Maven Central:
 
 - Group id / organization: *org.pure4s*
 - Artifact id / name: *logger4s*
-- Latest version is 0.3.0
+- Latest version is 0.3.1
 
 Usage with SBT, adding a dependency to the latest version of Logger4s to your `build.sbt` e.g:
 
 ```scala
 // For Scala 2.11, or 2.12
-libraryDependencies += "org.pure4s" %% "logger4s-cats"   % "0.3.0"  // Cats ecosystem (cats-effect)
+libraryDependencies += "org.pure4s" %% "logger4s-cats"   % "0.3.1"  // Cats ecosystem (cats-effect)
 ```
 
 ## Modules
 
 | Module name          | Description                                                  | Version |
 | -------------------- | ------------------------------------------------------------ | ------- |
-| `logger4s-core`      | Algebras. Only if you want to support any backend            | `0.3.0` |
-| `logger4s-cats`      | Cats ecosystem (cats-effect)                                 | `0.3.0` |
-| `logger4s-scalaz`    | Scalaz ecosystem (scalaz-zio)                                | `0.3.0` |
+| `logger4s-core`      | Algebras. Only if you want to support any backend            | `0.3.1` |
+| `logger4s-cats`      | Cats ecosystem (cats-effect)                                 | `0.3.1` |
+| `logger4s-scalaz`    | Scalaz ecosystem (scalaz-zio)                                | `0.3.1` |
 
 ## Using Logger4s ##
 
