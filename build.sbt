@@ -68,8 +68,8 @@ lazy val logger4s = project
   .in(file("."))
   .settings(buildSettings)
   .settings(noPublishSettings)
-  .dependsOn(coreJVM)
-  .aggregate(coreJVM)
+  .dependsOn(coreJVM, catsJVM, scalazJVM)
+  .aggregate(coreJVM, catsJVM, scalazJVM)
 
 lazy val core = crossProject(JVMPlatform)
   .crossType(CrossType.Full)
